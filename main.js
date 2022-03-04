@@ -51,10 +51,12 @@ function printNumRoads() {
             let line = [center];
             line = line.concat(road);
             line.push(dest)
+            
             visual.poly(line, { opacity:0.75, stroke: "#00FF00" });
             if (dest) {
                 visual.text(road.length, dest.x + 1, dest.y + 1);
             }
+            
             for (var j = 0; j < road.length; j++) {
                 const pathStep = road[j];
                 if (!allRoads.find((s) => s.x == pathStep.x && s.y == pathStep.y)) {
@@ -62,7 +64,25 @@ function printNumRoads() {
                 }
             }
         }
+    }
+    
+    for (var i = 0; i < allPos.length; i++) {
+        const pos = allPos[i];
+        var adjCount = 0;
+        for (var dx = -1; dx <= 1; dx++) {
+            for (var dy = -1; dy <= 1; dy++) {
+                if (!(dx == 0 && dy == 0)) {
+                    const otherPos = new RoomPosition(pos.x + dx, pos.y + dy, 'sim');
+                    if (allPos.find((s) => s.isEqualTo(otherPos))) {
+                        ++adjCount;
+                    }
+                }
+            }
+        }
         
+        if (adjCount > 3) {
+            visual.circle(pos, { fill: "#00FF00", radius: 0.35 })
+        }
     }
     
     visual.text(allRoads.length, 4, 4)
