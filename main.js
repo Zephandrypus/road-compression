@@ -42,7 +42,7 @@ module.exports.loop = function () {
 }
 
 function printNumRoads() {
-    const allRoads = [];
+    const allPos = [];
     
     for (var i = 0; i < roads.length; i++) {
         const dest = dests[i];
@@ -59,8 +59,8 @@ function printNumRoads() {
             
             for (var j = 0; j < road.length; j++) {
                 const pathStep = road[j];
-                if (!allRoads.find((s) => s.x == pathStep.x && s.y == pathStep.y)) {
-                    allRoads.push(pathStep);
+                if (!allPos.find((s) => s.x == pathStep.x && s.y == pathStep.y)) {
+                    allPos.push(pathStep);
                 }
             }
         }
@@ -85,5 +85,5 @@ function printNumRoads() {
         }
     }
     
-    visual.text(allRoads.length, 4, 4)
+    visual.text(allPos.length, 4, 4)
 }
