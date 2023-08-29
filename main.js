@@ -2,20 +2,21 @@ const room = Game.rooms['sim'];
 const visual = room.visual;
 
 let roads = [];
-const dests = [
+let dests = [
     new RoomPosition(25, 1, 'sim'),
     new RoomPosition(48, 25, 'sim'),
     new RoomPosition(25, 48, 'sim'),
-    new RoomPosition(1, 25, 'sim'),
-    new RoomPosition(22, 15, 'sim'),
-    new RoomPosition(43, 44, 'sim'),
-    new RoomPosition(6, 44, 'sim'),
-    new RoomPosition(35, 2, 'sim'),
-    new RoomPosition(34, 11, 'sim'),
-    new RoomPosition(25, 17, 'sim'),
-    new RoomPosition(15, 31, 'sim'),
-    new RoomPosition(35, 40, 'sim')
+    new RoomPosition(1, 25, 'sim')
 ];
+
+dests.push(room.controller.pos);
+const sources = room.find(FIND_SOURCES);
+dests = dests.concat(sources.map((s) => s.pos));
+const spawns = room.find(FIND_MY_SPAWNS);
+dests = dests.concat(spawns.map((s) => s.pos));
+const containers = room.find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_CONTAINER } });
+dests = dests.concat(containers.map((s) => s.pos));
+
 const center = new RoomPosition(25, 25, 'sim');
 
 let heuristicWeight = 1.2;
